@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapScript : MonoBehaviour
+public class SpawnEffects : MonoBehaviour
 {
-    public float rotationSpeed = 10;
+    [SerializeField]
+    private float rotationSpeed = 10.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +16,6 @@ public class MapScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(
-            0, //rotationSpeed*Time.deltaTime,
-            rotationSpeed*Time.deltaTime,
-            0 //rotationSpeed*Time.deltaTime
-            );
+        transform.Rotate(0, Time.deltaTime * rotationSpeed, 0);
     }
 }
