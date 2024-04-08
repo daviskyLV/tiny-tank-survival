@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/AurynSky/Rockets Missiles and Bombs/Scenes/DemoScene_RMB.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Scenes/TestScene.unity
+    guid: 2787c27075eade0429823514e638a539
+  - enabled: 1
+    path: Assets/Scenes/MasterScene.unity
+    guid: 4876e7f7ffc577244870c9c415d8448b
+  - enabled: 1
+    path: Assets/Scenes/SandyPingPong.unity
+    guid: 6c97c5c82b9f40340b76203f782dd344
   m_configObjects: {}
