@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject mainCamera;
     [SerializeField]
-    private float movementSpeed = 2;
+    private float movementSpeed = 17;
     [SerializeField]
-    private float rotationSpeedDegrees = 72;
+    private float rotationSpeedDegrees = 300;
 
     private GameObject tank;
     private AsyncOperation asyncLoad;
@@ -54,12 +54,11 @@ public class PlayerController : MonoBehaviour
             var vertMove = Input.GetAxis("Vertical");
             var horMove = Input.GetAxis("Horizontal");
             if (vertMove > 0)
-                rb.velocity = tTrans.forward * movementSpeed * Time.deltaTime;
+                rb.MovePosition(tTrans.position + tTrans.forward * movementSpeed * Time.deltaTime);
 
             rb.MoveRotation(Quaternion.Euler(0,
                 tTrans.rotation.eulerAngles.y + rotationSpeedDegrees * horMove * Time.deltaTime,
                 0));
-            //tTrans.Rotate(0, rotationSpeedDegrees * horMove * Time.deltaTime, 0);
 
             // Updating camera position
             mainCamera.transform.SetPositionAndRotation(
