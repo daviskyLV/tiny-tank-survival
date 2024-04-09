@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +12,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpPower = 300.0f;
     [SerializeField]
-    public float speed = 6.0f;
+    private float speed = 6.0f;
+    [SerializeField]
+    private TextMeshProUGUI scoreUI;
 
     private double lastJump = 0;
+    private int score;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        score = 0;
     }
 
     private void FixedUpdate()
@@ -32,6 +37,11 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+
+    void SetScoreText()
+    {
+        scoreUI.text = "Score: " + score.ToString();
     }
 
     void OnFire(InputValue fireValue)
@@ -56,6 +66,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddExplosionForce(jumpPower*2, other.transform.position, 7.27f);
             other.gameObject.SetActive(false);
+            score++;
+            SetScoreText();
         }
     }
 }
