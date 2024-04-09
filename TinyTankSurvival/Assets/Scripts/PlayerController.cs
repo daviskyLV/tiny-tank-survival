@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -9,19 +10,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject[] tankPrefabs;
     [SerializeField]
-    private GameObject mainCamera;
+    private GameObject playerCharacterPrefab;
     [SerializeField]
-    private float movementSpeed = 17;
-    [SerializeField]
-    private float rotationSpeedDegrees = 300;
+    private CameraScript mainCameraScript;
 
-    private GameObject tank;
+    private GameObject playerCharacter;
     private AsyncOperation asyncLoad;
 
     // Start is called before the first frame update
     void Start()
     {
-        //DontDestroyOnLoad(this.gameObject);
         asyncLoad = SceneManager.LoadSceneAsync("SandyPingPong", LoadSceneMode.Additive);
     }
 
@@ -29,42 +27,25 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && asyncLoad.isDone) {
-            if (tank != null)
-                Destroy(tank);
+            if (playerCharacter != null)
+                Destroy(playerCharacter);
 
-            // Instantiating the new tank
-            tank = Instantiate(tankPrefabs[0]);
-            tank.name = "PlayerTank";
-
-            // Move the GameObject to the newly loaded Scene
             Scene pingPongScene = SceneManager.GetSceneByName("SandyPingPong");
-            SceneManager.MoveGameObjectToScene(tank, pingPongScene);
+            // Instantiating the new player character
+            playerCharacter = Instantiate(playerCharacterPrefab);
+            playerCharacter.name = "PlayerCharacter";
+            var playerTank = Instantiate(tankPrefabs[0], playerCharacter.transform);
+            playerTank.name = "Tank";
 
-            tank.transform.position = GameObject.Find("PlayerSpawn").transform.position + new Vector3(0, 0.5f, 0);
-        }
+            // Moving the player character to level scene and setting it up
+            SceneManager.MoveGameObjectToScene(playerCharacter, pingPongScene);
+            playerCharacter.transform.position = GameObject.Find("PlayerSpawn").transform.position;
 
-
-
-        if (tank != null)
-        {
-            var tTrans = tank.transform;
-            var rb = tank.GetComponent<Rigidbody>();
-
-            // Movement
-            var vertMove = Input.GetAxis("Vertical");
-            var horMove = Input.GetAxis("Horizontal");
-            if (vertMove > 0)
-                rb.MovePosition(tTrans.position + tTrans.forward * movementSpeed * Time.deltaTime);
-
-            rb.MoveRotation(Quaternion.Euler(0,
-                tTrans.rotation.eulerAngles.y + rotationSpeedDegrees * horMove * Time.deltaTime,
-                0));
-
-            // Updating camera position
-            mainCamera.transform.SetPositionAndRotation(
-                tTrans.position + new Vector3(0, 11, 0) + tTrans.forward*-5,
-                Quaternion.Euler(69, tTrans.rotation.eulerAngles.y, 0)
-            );
+            mainCameraScript.PlayerTank = playerTank;
+            // Movement stuff
+            var movementScript = playerCharacter.GetComponent<PlayerMovement>();
+            movementScript.Tank = playerTank;
+            playerCharacter.GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 }
