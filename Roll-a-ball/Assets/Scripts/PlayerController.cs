@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float movementX;
     private float movementY;
-    public float jumpPower = 69.727f;
-    public float speed = 5;
+    [SerializeField]
+    private float jumpPower = 300.0f;
+    [SerializeField]
+    public float speed = 6.0f;
 
     private double lastJump = 0;
     // Start is called before the first frame update
@@ -45,6 +47,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector3(0, jumpPower, 0));
             lastJump = Time.realtimeSinceStartupAsDouble;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pickup"))
+        {
+            rb.AddExplosionForce(jumpPower*2, other.transform.position, 7.27f);
+            other.gameObject.SetActive(false);
         }
     }
 }
