@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float movementX;
     private float movementY;
-    public float jumpPower = 420.69f;
+    public float jumpPower = 69.727f;
     public float speed = 5;
+
+    private double lastJump = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +41,10 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("OnJump triggered!");
         Debug.Log("Velocity: " + Mathf.Abs(rb.velocity.y));
-        if (Mathf.Abs(rb.velocity.y) < .2)
+        if (Time.realtimeSinceStartupAsDouble - lastJump >= 1)
         {
             rb.AddForce(new Vector3(0, jumpPower, 0));
+            lastJump = Time.realtimeSinceStartupAsDouble;
         }
     }
 }
