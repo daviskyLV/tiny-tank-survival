@@ -28,3 +28,8 @@ The player can choose a map on which to play. Every map includes the player's "s
 - Ammo reload speed - ammo reloads faster (each bullet)
 - Ammo capacity - add 1 more bullet in stock
 - Bullet bouncyness - improve all bullet bouncyness (off walls) by 1
+
+## Milestones
+1. Implement basic movement for the player. The player needs to have a simple test tank, that could later be used as a reference for other tank models in the future. Create a test map, where the main gameplay loop will be tested. Implement simple spawning of enemies.
+2. Implement core bullet mechanics - bouncing off walls and destroying player/enemies. Add shooting mechanic to player. Add movement & shooting AI to enemies. Implement round progression & score HUD.
+3. Implement upgrade system (after rounds, reload, speed, etc. limitations). Add other types of tanks. Create more maps. Add UI for leaderboard and other necessary menu elements.
