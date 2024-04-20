@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,18 @@ public class Spawner : MonoBehaviour
 
     private List<GameObject> enemySpawnpoints = new();
     private double lastSpawntime = 0;
+    private GameObject playerCharacter;
+
+    // Events
+    /// <summary>
+    /// Invoked whenever an enemy spawns. Argument is enemy's character in the level.
+    /// </summary>
+    public static event Action<GameObject> OnEnemySpawned;
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerController.OnPlayerSpawned += UpdatePlayerCharacter;
         // Getting all the enemy spawnpoints
         foreach (Transform t in enemySpawnpointParent.transform)
         {
@@ -34,6 +43,11 @@ public class Spawner : MonoBehaviour
         SpawnEnemy();
     }
 
+    private void UpdatePlayerCharacter(GameObject character)
+    {
+        playerCharacter = character;
+    }
+
     private void SpawnEnemy()
     {
         if (
@@ -44,7 +58,6 @@ public class Spawner : MonoBehaviour
         }
 
         // Getting player character
-        var playerCharacter = GameObject.Find("PlayerCharacter");
         if (playerCharacter == null)
             return;
         var playerTank = playerCharacter.transform.Find("Tank");
@@ -52,9 +65,12 @@ public class Spawner : MonoBehaviour
             return;
 
         var enemy = Instantiate(enemyPrefab, enemyHolder.transform);
-        var chosenSpawn = enemySpawnpoints[Random.Range(0, enemySpawnpoints.Count)];
+        var chosenSpawn = enemySpawnpoints[UnityEngine.Random.Range(0, enemySpawnpoints.Count)];
         enemy.transform.position = chosenSpawn.transform.position;
-        enemy.GetComponent<EnemyMovement>().PlayerTank = playerTank.gameObject;
+        enemy.GetComponent<EnemyMovement>().PlayerTank = playerTank;
+
+        // Invoking events
+        OnEnemySpawned?.Invoke(enemy);
 
         lastSpawntime = Time.realtimeSinceStartupAsDouble;
     }

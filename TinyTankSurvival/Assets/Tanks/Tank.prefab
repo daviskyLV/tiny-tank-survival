@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3048155061584529763}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000000014901159, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.19999981, z: 0}
   m_LocalScale: {x: 0.6, y: 0.2999925, z: 0.8000001}
   m_ConstrainProportionsScale: 0
@@ -360,9 +360,11 @@ GameObject:
   m_Component:
   - component: {fileID: 938103165532857621}
   - component: {fileID: 1058371260735588197}
+  - component: {fileID: 4754937498724862467}
+  - component: {fileID: 8811993889311973034}
   m_Layer: 8
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,3 +407,31 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.7, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4754937498724862467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923247548632480749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2284b84ea3d6a5e4c862a67578d71eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rocketPrefab: {fileID: 1913703475352026, guid: 17d65d3f5096ce74b908420176a3de91,
+    type: 3}
+--- !u!114 &8811993889311973034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923247548632480749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a9eaa96e1716c418836282e4366cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TankTop: {fileID: 3048155061584529763}
+  aimPosition: {x: 0, y: 0, z: 0}

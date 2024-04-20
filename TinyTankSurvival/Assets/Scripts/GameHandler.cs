@@ -6,15 +6,11 @@ using UnityEngine;
 // Singleton to handle some game related stuff
 public class GameHandler : MonoBehaviour
 {
-    private static GameHandler _instance;
-
-    public static GameHandler Instance {
-        get { return _instance; }
-    }
+    public static GameHandler Instance { get; private set; }
 
     void Awake()
     {
-        _instance = this;
+        Instance = this;
     }
 
     // Update is called once per frame

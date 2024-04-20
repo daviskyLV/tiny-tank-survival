@@ -11,11 +11,14 @@ public class PlayerController : MonoBehaviour
     private GameObject[] tankPrefabs;
     [SerializeField]
     private GameObject playerCharacterPrefab;
-    [SerializeField]
-    private CameraScript mainCameraScript;
 
     private GameObject playerCharacter;
     private AsyncOperation asyncLoad;
+
+    /// <summary>
+    /// Invoked whenever the player spawns. Argument is player's character in the level.
+    /// </summary>
+    public static event Action<GameObject> OnPlayerSpawned;
 
     // Start is called before the first frame update
     void Start()
@@ -41,11 +44,12 @@ public class PlayerController : MonoBehaviour
             SceneManager.MoveGameObjectToScene(playerCharacter, pingPongScene);
             playerCharacter.transform.position = GameObject.Find("PlayerSpawn").transform.position;
 
-            mainCameraScript.PlayerTank = playerTank;
-            // Movement stuff
-            var movementScript = playerCharacter.GetComponent<PlayerMovement>();
-            movementScript.Tank = playerTank;
-            playerCharacter.GetComponent<NavMeshAgent>().enabled = true;
+            // Enabling necessary components
+            playerCharacter.GetComponent<PlayerMovement>().enabled = true;
+            playerCharacter.GetComponent<PlayerShooting>().enabled = true;
+
+            // Letting others know that we just spawned the player
+            OnPlayerSpawned?.Invoke(playerCharacter);
         }
     }
 }

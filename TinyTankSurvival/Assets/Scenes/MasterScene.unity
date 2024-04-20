@@ -123,6 +123,74 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &173231701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 938103165532857621, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8923247548632480749, guid: d72a03cb2de38184c8db9acb941ebb45,
+        type: 3}
+      propertyPath: m_Name
+      value: Tank
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d72a03cb2de38184c8db9acb941ebb45, type: 3}
 --- !u!1 &1780017160
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,13 +218,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780017160}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4005097, y: 0.58274525, z: -0.4005097, w: 0.58274525}
-  m_LocalPosition: {x: -26, y: 6.98, z: -61}
+  m_LocalRotation: {x: 0.62932044, y: 0, z: 0, w: 0.777146}
+  m_LocalPosition: {x: 0, y: 14, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 69, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 78, y: 0, z: 0}
 --- !u!81 &1780017162
 AudioListener:
   m_ObjectHideFlags: 0
@@ -290,9 +358,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5572b05edb4c7f4e8c3730678e71758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &6366274850677015042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1913703475352026, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_Name
+      value: SmallRocketBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.183
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.779
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7010574
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7010574
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.092296004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.092296004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619963538091042, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17d65d3f5096ce74b908420176a3de91, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1780017161}
   - {fileID: 1988929787}
+  - {fileID: 6366274850677015042}
+  - {fileID: 173231701}

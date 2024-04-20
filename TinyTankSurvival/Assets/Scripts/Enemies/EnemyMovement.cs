@@ -6,14 +6,14 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent agent;
-    public GameObject PlayerTank { get; set; }
-    public GameObject Tank { get; set; }
+    public Transform PlayerTank { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
+        PlayerController.OnPlayerSpawned += UpdatePlayerTank;
     }
 
     // Update is called once per frame
@@ -24,15 +24,19 @@ public class EnemyMovement : MonoBehaviour
         UpdateDestination();
     }
 
+    private void UpdatePlayerTank(GameObject playerCharacter)
+    {
+        PlayerTank = playerCharacter.transform.Find("Tank");
+    }
+
     private void UpdateDestination() {
         if (PlayerTank == null)
             return;
 
-        var pTrans = PlayerTank.transform;
-        if (Vector3.Distance(transform.position, pTrans.position) >= agent.stoppingDistance)
+        if (Vector3.Distance(transform.position, PlayerTank.position) >= agent.stoppingDistance)
         {
             // Updating destination's position
-            agent.destination = pTrans.position;
+            agent.destination = PlayerTank.position;
             return;
         }
 
