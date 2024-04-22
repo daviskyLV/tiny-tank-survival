@@ -14,13 +14,13 @@ public class RocketController : MonoBehaviour
     /// <summary>
     /// Tank which shot the rocket, if null rocket is disabled
     /// </summary>
-    public GameObject Shooter { get; set; } // tank which shot the rocket
+    public GameObject Shooter { get; set; }
 
     // Upgradeable values
     /// <summary>
     /// Rocket travel speed
     /// </summary>
-    public float Speed { get; set; } = 7.0f;
+    public float Speed { get; set; } = 0.0f;
     /// <summary>
     /// How fast the rocket rotates towards its TargetTank. Measured in degrees per second
     /// </summary>
@@ -29,6 +29,17 @@ public class RocketController : MonoBehaviour
     /// Target Tank for the rocket to aim towards, null if heat seeking is disabled
     /// </summary>
     public GameObject TargetTank { get; set; }
+    /// <summary>
+    /// The lifetime of the rocket
+    /// </summary>
+    public double Lifetime { get; set; } = 10.0;
+
+    private double startTime = 0;
+
+    private void Start()
+    {
+        startTime = Time.timeAsDouble;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -36,8 +47,20 @@ public class RocketController : MonoBehaviour
         if (Shooter == null)
             return;
 
+        CheckLifetime();
+        MoveRocket();
+    }
+
+    private void CheckLifetime()
+    {
+        if (Time.timeAsDouble - startTime > Lifetime)
+            Destroy(gameObject);
+    }
+
+    private void MoveRocket()
+    {
         // Handling rotation
-        var aimTowards = transform.position + transform.up * 3;
+        var aimTowards = transform.position + transform.forward * 3;
         if (TargetTank != null)
         {
             aimTowards = TargetTank.transform.position;
@@ -51,18 +74,22 @@ public class RocketController : MonoBehaviour
         var finalRotation = Quaternion.Euler(spinRotationX, easedHeatRotation.y, easedHeatRotation.z);
         // Applying movement & rotation
         rb.Move(
-            transform.position + transform.up * Speed,
+            transform.position + Speed * Time.fixedDeltaTime * transform.up,
             finalRotation
         );
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Tank"))
+        if (other.gameObject.CompareTag("Tank") && !other.gameObject.Equals(Shooter))
         {
             print("Hit a tank! KABOOM!");
+            print(other.transform);
+            print(other.transform.parent);
+            print(other.transform.parent.gameObject);
             Destroy(other.transform.parent.gameObject); // destroying the player/enemy
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
 }

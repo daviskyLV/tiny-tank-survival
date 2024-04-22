@@ -143,11 +143,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913703475352026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9ac7aaec5f2aa143b54952ad868fe51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationsPerSecond: 4
+  rotationsPerSecond: 1
   rb: {fileID: 4112065129907629741}
   baseRotation: {x: 75, y: 90, z: 90}
