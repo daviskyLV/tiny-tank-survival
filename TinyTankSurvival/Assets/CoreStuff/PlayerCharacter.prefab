@@ -82,3 +82,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c461d9ba7fb4524489dc2885ce0864f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerControls:
+    m_Name: Player Controls
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 092e9780-064e-4955-9eba-0a19a6f49370
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0

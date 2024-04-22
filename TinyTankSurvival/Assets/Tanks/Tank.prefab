@@ -421,6 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocketPrefab: {fileID: 1913703475352026, guid: 17d65d3f5096ce74b908420176a3de91,
     type: 3}
+  gun: {fileID: 2368295387284021676}
 --- !u!114 &8811993889311973034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,4 +435,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TankTop: {fileID: 3048155061584529763}
-  aimPosition: {x: 0, y: 0, z: 0}

@@ -17,8 +17,4 @@ public class EnemyController : MonoBehaviour
     {
         
     }
-
-    private void AimAtPlayer() {
-    
-    }
 }

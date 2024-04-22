@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SandyPingPong.unity
     guid: 6c97c5c82b9f40340b76203f782dd344
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: f6baff6ea16dd874d89a0afa4f27820e,
+      type: 2}
