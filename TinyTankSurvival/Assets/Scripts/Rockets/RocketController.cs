@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class RocketController : MonoBehaviour
 {
-    [SerializeField]
-    private float rotationsPerSecond; // rotation on X axis
-    [SerializeField]
-    private Rigidbody rb;
-    [SerializeField]
-    private Vector3 baseRotation;
-
-    /// <summary>
-    /// Tank which shot the rocket, if null rocket is disabled
-    /// </summary>
-    public GameObject Shooter { get; set; }
-
     // Upgradeable values
     /// <summary>
     /// Rocket travel speed
     /// </summary>
-    public float Speed { get; set; } = 0.0f;
+    public float Speed { get; set; } = 3.0f;
     /// <summary>
     /// How fast the rocket rotates towards its TargetTank. Measured in degrees per second
     /// </summary>
-    public float HeatSeekingRotation { get; set; } = 0.0f;
+    public float HeatSeekingRotation { get; set; } = 72.7f;
     /// <summary>
     /// Target Tank for the rocket to aim towards, null if heat seeking is disabled
     /// </summary>
@@ -44,11 +32,11 @@ public class RocketController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Shooter == null)
-            return;
+        //if (null == null)
+        //    return;
 
-        CheckLifetime();
-        MoveRocket();
+        //CheckLifetime();
+        //MoveRocket();
     }
 
     private void CheckLifetime()
@@ -57,39 +45,57 @@ public class RocketController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void MoveRocket()
-    {
-        // Handling rotation
-        var aimTowards = transform.position + transform.forward * 3;
-        if (TargetTank != null)
-        {
-            aimTowards = TargetTank.transform.position;
-        }
+    //private void MoveRocket()
+    //{
+    //// handling rotation
+    //var aimtowards = transform.position + transform.up * 3;
+    //    if (targettank != null)
+    //    {
+    //        aimtowards = targettank.transform.position;
+    //    }
 
-        // https://discussions.unity.com/t/how-to-slow-down-transform-lookat/126080/2
-        Vector3 direction = aimTowards - transform.position;
-        Quaternion toRotation = Quaternion.FromToRotation(transform.up, direction);
-        var easedHeatRotation = Quaternion.Lerp(transform.rotation, toRotation, HeatSeekingRotation * Time.fixedDeltaTime).eulerAngles;
-        var spinRotationX = 360 * rotationsPerSecond * Time.fixedDeltaTime * rb.rotation.eulerAngles.x;
-        var finalRotation = Quaternion.Euler(spinRotationX, easedHeatRotation.y, easedHeatRotation.z);
-        // Applying movement & rotation
-        rb.Move(
-            transform.position + Speed * Time.fixedDeltaTime * transform.up,
-            finalRotation
-        );
-    }
+    //    // https://discussions.unity.com/t/how-to-slow-down-transform-lookat/126080/2
+    //    //Vector3 direction = aimTowards - transform.position;
+    //    //Quaternion toRotation = Quaternion.LookRotation(direction, -transform.forward); //Quaternion.FromToRotation(transform.up, direction);
+    //    //var easedHeatRotation = Quaternion.Lerp(transform.rotation, toRotation, HeatSeekingRotation * Time.fixedDeltaTime).eulerAngles;
+    //    //
+    //    //
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Tank") && !other.gameObject.Equals(Shooter))
-        {
-            print("Hit a tank! KABOOM!");
-            print(other.transform);
-            print(other.transform.parent);
-            print(other.transform.parent.gameObject);
-            Destroy(other.transform.parent.gameObject); // destroying the player/enemy
-        }
+    //    // https://www.youtube.com/watch?v=0v_H3oOR0aU
+    //    // Comment by @maxokaan that mentions how to do it for 3D
+    //    Vector3 direction = aimTowards - transform.position;
+    //    direction.Normalize();
 
-        Destroy(gameObject);
-    }
+    //    Vector3 amountToRotate = Vector3.Cross(direction, transform.up) * Vector3.Angle(transform.up, direction);
+    //    var easedHeatRotation = Quaternion.Lerp(
+    //        transform.rotation,
+    //        Quaternion.Euler(amountToRotate),
+    //        HeatSeekingRotation * Time.fixedDeltaTime
+    //    );
+
+    //    var spinRotationX = 360 * 3 * Time.fixedDeltaTime * transform.rotation.eulerAngles.x;
+    //    var finalRotation = Quaternion.Euler(spinRotationX, easedHeatRotation.y, easedHeatRotation.z);
+
+    //    //rb.angularVelocity = -amountToRotate * rotateSpeed;
+
+    //    // Applying movement & rotation
+    //    //rb.Move(
+    //    //    transform.position + Speed * Time.fixedDeltaTime * transform.up,
+    //    //    finalRotation
+    //    //);
+    //}
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Tank") && !other.gameObject.Equals(null))
+    //    {
+    //        print("Hit a tank! KABOOM!");
+    //        print(other.transform);
+    //        print(other.transform.parent);
+    //        print(other.transform.parent.gameObject);
+    //        Destroy(other.transform.parent.gameObject); // destroying the player/enemy
+    //    }
+
+    //    Destroy(gameObject);
+    //}
 }

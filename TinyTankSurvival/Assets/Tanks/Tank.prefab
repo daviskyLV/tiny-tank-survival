@@ -360,8 +360,8 @@ GameObject:
   m_Component:
   - component: {fileID: 938103165532857621}
   - component: {fileID: 1058371260735588197}
-  - component: {fileID: 4754937498724862467}
   - component: {fileID: 8811993889311973034}
+  - component: {fileID: 1828945359122330968}
   m_Layer: 8
   m_Name: Tank
   m_TagString: Tank
@@ -407,21 +407,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.7, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4754937498724862467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8923247548632480749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2284b84ea3d6a5e4c862a67578d71eb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rocketPrefab: {fileID: 1913703475352026, guid: 17d65d3f5096ce74b908420176a3de91,
-    type: 3}
-  gun: {fileID: 2368295387284021676}
 --- !u!114 &8811993889311973034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,3 +420,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TankTop: {fileID: 3048155061584529763}
+--- !u!114 &1828945359122330968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923247548632480749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39250e5d91be4f645af0d8e62d1ef97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 8046616152963371920, guid: 364bb3feca6e0a843a55ad54429a47ba,
+    type: 3}
+  gun: {fileID: 2368295387284021676}
