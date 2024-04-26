@@ -23,6 +23,14 @@ public abstract class Projectile : MonoBehaviour
     protected void CheckLifetime()
     {
         if (Time.timeAsDouble - startTime > lifetime)
-            Destroy(gameObject);
+            ExplodeProjectile();
+    }
+
+    /// <summary>
+    /// Play the explosion animation and clean up the projectile
+    /// </summary>
+    protected void ExplodeProjectile()
+    {
+        Destroy(gameObject);
     }
 }

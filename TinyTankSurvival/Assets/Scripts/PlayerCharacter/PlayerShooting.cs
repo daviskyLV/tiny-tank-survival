@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerShooting : MonoBehaviour
 {
     private PlayerInputActions playerControls;
-    private StandardShooting tankShooting;
+    private TankShooting tankShooting;
     private InputAction fire;
 
     private void Awake()
@@ -31,17 +31,12 @@ public class PlayerShooting : MonoBehaviour
     void Start()
     {
         var tank = transform.Find("Tank");
-        tankShooting = tank.GetComponent<StandardShooting>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        tankShooting = tank.GetComponent<TankShooting>();
+        print(tankShooting);
     }
 
     private void Fire(InputAction.CallbackContext context)
     {
-        tankShooting.Shoot(1.0f, 0.0f);
+        tankShooting.Shoot();
     }
 }

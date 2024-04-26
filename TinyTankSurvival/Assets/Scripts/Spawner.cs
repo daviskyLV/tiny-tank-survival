@@ -60,7 +60,7 @@ public class Spawner : MonoBehaviour
         // Getting player character
         if (playerCharacter == null)
             return;
-        var playerTank = playerCharacter.transform.Find("Tank");
+        var playerTank = playerCharacter.transform.Find(Constants.TankName);
         if (playerTank == null)
             return;
 

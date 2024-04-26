@@ -2,9 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.GraphicsBuffer;
 
 public class StandardShooting : TankShooting
 {
+    /// <summary>
+    /// Unified method to create and activate the projectile
+    /// </summary>
+    /// <param name="projectileSpeed">How fast the projectile travels</param>
+    /// <param name="bounces">How many times can the projectile bounce off</param>
+    /// <param name="heatSeekingSpeed">Projectile heat seeking speed, measured in degrees/s</param>
+    /// <param name="target">Heat seeking target, null if disabled</param>
+    private void CreateProjectile(float projectileSpeed, int bounces, float heatSeekingSpeed, GameObject target = null)
+    {
+        var gt = gun.transform;
+
+        var projectile = Instantiate(projectilePrefab);
+        SceneManager.MoveGameObjectToScene(projectile, gameObject.scene);
+        var rt = projectile.transform;
+        rt.position = gt.position + gt.forward * ((gt.lossyScale.z + rt.lossyScale.z) / 1.9f);
+
+        // Managing projectile script
+        var projectileController = projectile.GetComponent<StandardProjectile>();
+        projectileController.enabled = true;
+        projectileController.Setup(transform.gameObject, projectileSpeed, bounces, heatSeekingSpeed, target);
+    }
+
     /// <summary>
     /// Shoots a rocket out of the barrel
     /// </summary>
@@ -13,14 +36,12 @@ public class StandardShooting : TankShooting
     /// <param name="target">Heat seeking target, null if disabled</param>
     public void Shoot(float projectileSpeed, float heatSeekingSpeed, GameObject target = null)
     {
-        var gt = gun.transform;
+        CreateProjectile(projectileSpeed, 3, heatSeekingSpeed, target);
+    }
 
-        var projectile = Instantiate(projectilePrefab);
-        SceneManager.MoveGameObjectToScene(projectile, gameObject.scene);
-        var rt = projectile.transform;
-        var projectileController = projectile.GetComponent<StandardProjectile>();
-        rt.position = gt.position + gt.forward * (gt.lossyScale.z + rt.lossyScale.z);
-        projectileController.enabled = true;
-        projectileController.Setup(transform.gameObject, projectileSpeed, heatSeekingSpeed, target);
+    public override void Shoot()
+    {
+
+        CreateProjectile(5.0f, 3000, 0.0f, null);
     }
 }
