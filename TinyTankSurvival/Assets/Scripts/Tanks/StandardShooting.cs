@@ -20,6 +20,7 @@ public class StandardShooting : TankShooting
         SceneManager.MoveGameObjectToScene(projectile, gameObject.scene);
         var rt = projectile.transform;
         rt.position = gt.position + gt.forward * ((gt.lossyScale.z + rt.lossyScale.z) / 1.9f);
+        rt.LookAt(rt.position + gt.forward);
 
         // Managing projectile script
         var projectileController = projectile.GetComponent<StandardProjectile>();
