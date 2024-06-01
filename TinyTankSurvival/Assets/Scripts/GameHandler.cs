@@ -10,7 +10,8 @@ public class GameHandler : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
     }
 
     // Update is called once per frame

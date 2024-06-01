@@ -35,17 +35,18 @@ public class PlayerController : MonoBehaviour
             Scene pingPongScene = SceneManager.GetSceneByName("SandyPingPong");
             // Instantiating the new player character
             playerCharacter = Instantiate(playerCharacterPrefab);
-            playerCharacter.name = "PlayerCharacter";
+            playerCharacter.name = Constants.PlayerCharacterName;
             var playerTank = Instantiate(tankPrefabs[0], playerCharacter.transform);
-            playerTank.name = "Tank";
+            playerTank.name = Constants.TankName;
 
             // Moving the player character to level scene and setting it up
             SceneManager.MoveGameObjectToScene(playerCharacter, pingPongScene);
-            playerCharacter.transform.position = GameObject.Find("PlayerSpawn").transform.position;
+            playerCharacter.transform.position = GameObject.Find(Constants.PlayerSpawnName).transform.position;
 
             // Enabling necessary components
             playerCharacter.GetComponent<PlayerMovement>().enabled = true;
             playerCharacter.GetComponent<PlayerShooting>().enabled = true;
+            playerCharacter.GetComponent<PlayerAiming>().enabled = true;
 
             // Letting others know that we just spawned the player
             OnPlayerSpawned?.Invoke(playerCharacter);

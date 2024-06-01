@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TankAiming : MonoBehaviour
@@ -8,11 +9,16 @@ public class TankAiming : MonoBehaviour
     private GameObject TankTop;
     public Vector3 AimPosition { get; set; } = Vector3.zero;
 
+    private Transform tTopTrans;
+
+    private void Start()
+    {
+        tTopTrans = TankTop.transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        var facingRotation = Quaternion.FromToRotation(TankTop.transform.forward, AimPosition);
-        var topRotEul = TankTop.transform.rotation.eulerAngles;
-        TankTop.transform.rotation = Quaternion.Euler(topRotEul.x, facingRotation.y, topRotEul.z);
+        tTopTrans.LookAt( new Vector3(AimPosition.x, tTopTrans.position.y, AimPosition.z) );
     }
 }

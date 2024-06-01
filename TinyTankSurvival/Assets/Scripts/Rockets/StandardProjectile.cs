@@ -101,7 +101,7 @@ public class StandardProjectile : Projectile
         if (other.gameObject == null)
             return; // dunno what happened
 
-        if (other.gameObject.CompareTag("Tank") && other.gameObject != null)
+        if (other.gameObject.CompareTag("Tank"))
         {
             // Allowing the shooter to clip through the projectile for a short time
             if (Time.timeAsDouble - startTime <= 0.2 && other.gameObject.Equals(shooter))

@@ -30,9 +30,8 @@ public class PlayerShooting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var tank = transform.Find("Tank");
+        var tank = transform.Find(Constants.TankName);
         tankShooting = tank.GetComponent<TankShooting>();
-        print(tankShooting);
     }
 
     private void Fire(InputAction.CallbackContext context)

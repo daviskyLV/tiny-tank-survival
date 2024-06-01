@@ -13,4 +13,8 @@ public static class Constants
     /// Player or Enemy character Tank child name
     /// </summary>
     public const string TankName = "Tank";
+    /// <summary>
+    /// Name of the player spawn in the level
+    /// </summary>
+    public const string PlayerSpawnName = "PlayerSpawn";
 }
