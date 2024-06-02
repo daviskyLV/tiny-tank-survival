@@ -5,12 +5,6 @@ using UnityEngine.UIElements.Experimental;
 
 public class StandardProjectile : Projectile
 {
-    /// <summary>
-    /// How long is the projectile allowed to clip through the shooter to avoid accidental hitting
-    /// </summary>
-    [SerializeField]
-    private double allowedClippingTime = 0.2;
-
     private bool setup = false;
 
     // Upgradeable values
@@ -26,10 +20,6 @@ public class StandardProjectile : Projectile
     /// Target Tank for the rocket to aim towards, null if heat seeking is disabled
     /// </summary>
     private GameObject targetTank;
-    /// <summary>
-    /// How many times can the bullet bounce against the walls
-    /// </summary>
-    private int bouncesLeft = 0;
     /// <summary>
     /// Used to override aiming rotation when moving the projectile
     /// </summary>
@@ -51,7 +41,6 @@ public class StandardProjectile : Projectile
     /// <param name="target">Target for heat seeking, null if disabled</param>
     public void Setup(GameObject shooter, float speed, int maxBounces, float heatSeekingRotation, GameObject target = null)
     {
-        Debug.Log($"Projectile setup position: {transform.position}");
         if (setup)
             return;
 
@@ -66,6 +55,8 @@ public class StandardProjectile : Projectile
 
     private void FixedUpdate()
     {
+        // TODO:
+        // For some GOD KNOWS WHAT reason, sometimes projectile glitches out to position 0,0,0
         CheckLifetime();
 
         if (shooter && setup)
@@ -84,7 +75,7 @@ public class StandardProjectile : Projectile
         }
 
         // Calculating the target position (default 3 units forward)
-        var aimTowards = rb.position + (initialRotation * Vector3.forward);
+        var aimTowards = transform.position + (initialRotation * Vector3.forward);
         if (targetTank != null)
         {
             aimTowards = targetTank.transform.position;
@@ -92,7 +83,7 @@ public class StandardProjectile : Projectile
 
         // Heat seeking based off of
         // https://github.com/Matthew-J-Spencer/Homing-Missile/blob/main/Missile.cs
-        var heading = aimTowards - rb.position;
+        var heading = aimTowards - transform.position;
         var heatRotation = Quaternion.LookRotation(heading, transform.up);
         // lerping heat rotation
         heatRotation = Quaternion.RotateTowards(initialRotation, heatRotation, heatSeekingRotation * Time.deltaTime);
@@ -106,50 +97,16 @@ public class StandardProjectile : Projectile
 
         // Applying movement & rotation
         rb.Move(
-            // todo:
-            // fix randomly going to 0,0,0 on first frame
-            rb.position + fwVec,
+            transform.position + fwVec,
             finalRotation
         );
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == null)
-            return; // dunno what happened
-
-        if (other.gameObject.CompareTag("Tank"))
-        {
-            // Allowing the shooter to clip through the projectile for a short time
-            if (Time.timeAsDouble - startTime <= allowedClippingTime && other.gameObject.Equals(shooter))
-                return;
-
-            Destroy(other.transform.parent.gameObject); // destroying the player/enemy
-            ExplodeProjectile();
+        if (CheckForBasicCollisions(other))
             return;
-        }
-        else if (other.gameObject.CompareTag("Projectile")) {
-            ExplodeProjectile();
-            return;
-        }
 
-        // Probably a wall or something
-        if (bouncesLeft <= 0) {
-            ExplodeProjectile();
-            return;
-        }
-
-        // Bouncing off
-        // Creating a ray to get the surface
-        RaycastHit hit;
-        var tp = transform.position;
-        if (Physics.Raycast(tp, transform.forward, out hit, 2.0f + transform.lossyScale.z))
-        {
-            // really dumb way to ensure Y level stays consistent, im bad at math ok?
-            var direction = Vector3.Reflect(transform.forward, hit.normal).normalized; //tp + Vector3.Reflect(transform.forward, hit.normal);
-            direction.y = 0; // Allowing bounces only on horizontal axis
-            overridenMovementRotation = Quaternion.LookRotation(direction, transform.up);
-            bouncesLeft--;
-        }
+        overridenMovementRotation = ApplyHorizontalRicochet();
     }
 }
