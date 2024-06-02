@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class StandardProjectile : Projectile
 {
+    /// <summary>
+    /// How long is the projectile allowed to clip through the shooter to avoid accidental hitting
+    /// </summary>
+    [SerializeField]
+    private double allowedClippingTime = 0.2;
+
     private bool setup = false;
 
     // Upgradeable values
@@ -23,6 +30,10 @@ public class StandardProjectile : Projectile
     /// How many times can the bullet bounce against the walls
     /// </summary>
     private int bouncesLeft = 0;
+    /// <summary>
+    /// Used to override aiming rotation when moving the projectile
+    /// </summary>
+    private Quaternion? overridenMovementRotation = null;
 
     // Start is called before the first frame update
     private void Start()
@@ -40,16 +51,17 @@ public class StandardProjectile : Projectile
     /// <param name="target">Target for heat seeking, null if disabled</param>
     public void Setup(GameObject shooter, float speed, int maxBounces, float heatSeekingRotation, GameObject target = null)
     {
+        Debug.Log($"Projectile setup position: {transform.position}");
         if (setup)
             return;
-
-        setup = true;
 
         this.shooter = shooter;
         this.projectileSpeed = speed;
         this.bouncesLeft = maxBounces;
         this.heatSeekingRotation = heatSeekingRotation;
         this.targetTank = target;
+
+        setup = true;
     }
 
     private void FixedUpdate()
@@ -63,35 +75,40 @@ public class StandardProjectile : Projectile
     // Calculating and moving the projectile using a rigidbody
     private void MoveProjectile()
     {
-        // handling rotation
-        var aimTowards = transform.position + transform.forward * 3;
+        // Handling initial rotation, in case it was overridden somewhere else
+        Quaternion initialRotation = transform.rotation;
+        if (overridenMovementRotation != null)
+        {
+            initialRotation = (Quaternion)overridenMovementRotation;
+            overridenMovementRotation = null;
+        }
+
+        // Calculating the target position (default 3 units forward)
+        var aimTowards = rb.position + (initialRotation * Vector3.forward);
         if (targetTank != null)
         {
             aimTowards = targetTank.transform.position;
         }
 
-        // https://www.youtube.com/watch?v=0v_H3oOR0aU
-        // Comment by @maxokaan that mentions how to do it for 3D
-        Vector3 direction = aimTowards - transform.position;
-        direction.Normalize();
-
-        // Heat seeking rotation
-        Vector3 amountToRotate = Vector3.Cross(direction, transform.forward) * Vector3.Angle(transform.forward, direction);
-        var easedHeatRotation = Quaternion.Lerp(
-            transform.rotation,
-            Quaternion.Euler(amountToRotate),
-            heatSeekingRotation * Time.fixedDeltaTime
-        ).eulerAngles;
+        // Heat seeking based off of
+        // https://github.com/Matthew-J-Spencer/Homing-Missile/blob/main/Missile.cs
+        var heading = aimTowards - rb.position;
+        var heatRotation = Quaternion.LookRotation(heading, transform.up);
+        // lerping heat rotation
+        heatRotation = Quaternion.RotateTowards(initialRotation, heatRotation, heatSeekingRotation * Time.deltaTime);
 
         // Applying spin and calculating final rotation
         var spinRotation = 360 * rotationsPerSecondZ * Time.fixedDeltaTime;
-        var finalRotation = Quaternion.Euler(easedHeatRotation + new Vector3(0, 0, spinRotation));
+        var finalRotation = Quaternion.Euler(heatRotation.eulerAngles + new Vector3(0, 0, spinRotation));
+
+        // Calculating forward vector
+        var fwVec = projectileSpeed * Time.fixedDeltaTime * heading.normalized;
 
         // Applying movement & rotation
         rb.Move(
-            // TODO:
-            // FIX RANDOMLY GOING TO 0,0,0 ON FIRST FRAME
-            rb.position + projectileSpeed * Time.fixedDeltaTime * transform.forward,
+            // todo:
+            // fix randomly going to 0,0,0 on first frame
+            rb.position + fwVec,
             finalRotation
         );
     }
@@ -104,23 +121,20 @@ public class StandardProjectile : Projectile
         if (other.gameObject.CompareTag("Tank"))
         {
             // Allowing the shooter to clip through the projectile for a short time
-            if (Time.timeAsDouble - startTime <= 0.2 && other.gameObject.Equals(shooter))
+            if (Time.timeAsDouble - startTime <= allowedClippingTime && other.gameObject.Equals(shooter))
                 return;
 
-            print("Hit a tank!");
             Destroy(other.transform.parent.gameObject); // destroying the player/enemy
             ExplodeProjectile();
             return;
         }
         else if (other.gameObject.CompareTag("Projectile")) {
-            print("Hit a projectile!");
             ExplodeProjectile();
             return;
         }
 
         // Probably a wall or something
         if (bouncesLeft <= 0) {
-            print("Hit a wall, no more bounces left!");
             ExplodeProjectile();
             return;
         }
@@ -131,14 +145,10 @@ public class StandardProjectile : Projectile
         var tp = transform.position;
         if (Physics.Raycast(tp, transform.forward, out hit, 2.0f + transform.lossyScale.z))
         {
-            print($"Bouncing off! Hit normal: {hit.normal}");
             // really dumb way to ensure Y level stays consistent, im bad at math ok?
-            var direction = tp + Vector3.Reflect(transform.forward, hit.normal);
-            transform.LookAt(new Vector3(
-                direction.x,
-                tp.y,
-                direction.z
-            ));
+            var direction = Vector3.Reflect(transform.forward, hit.normal).normalized; //tp + Vector3.Reflect(transform.forward, hit.normal);
+            direction.y = 0; // Allowing bounces only on horizontal axis
+            overridenMovementRotation = Quaternion.LookRotation(direction, transform.up);
             bouncesLeft--;
         }
     }

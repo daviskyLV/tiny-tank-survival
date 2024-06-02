@@ -183,3 +183,4 @@ MonoBehaviour:
   rotationsPerSecondZ: 1
   rb: {fileID: 9030611929741132653}
   lifetime: 10
+  allowedClippingTime: 0.2
