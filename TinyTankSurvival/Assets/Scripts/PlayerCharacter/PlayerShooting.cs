@@ -1,13 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(AmmoManager))]
 public class PlayerShooting : MonoBehaviour
 {
     private PlayerInputActions playerControls;
     private TankShooting tankShooting;
     private InputAction fire;
+    [SerializeField]
+    private AmmoManager ammoManager;
+
+    /// <summary>
+    /// Invoked whenever the player shoots
+    /// </summary>
+    public static event Action OnPlayerShooting;
 
     private void Awake()
     {
@@ -36,6 +45,10 @@ public class PlayerShooting : MonoBehaviour
 
     private void Fire(InputAction.CallbackContext context)
     {
+        if (!ammoManager.SpendAmmo())
+            return;
+
         tankShooting.Shoot();
+        OnPlayerShooting?.Invoke();
     }
 }

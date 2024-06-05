@@ -13,25 +13,6 @@ public class GameUpgrades : MonoBehaviour
     [SerializeField]
     private GameHandler gameHandler;
 
-    /// <summary>
-    /// How long does it take for 1 bullet to replenish
-    /// </summary>
-    public float ReloadTime { get; private set; }
-    /// <summary>
-    /// Minimum reload time for 1 bullet
-    /// </summary>
-    [SerializeField]
-    [Min(0.0f)]
-    private float MinReloadTime = 0.1f;
-    /// <summary>
-    /// Added reload time per each upgrade
-    /// </summary>
-    [SerializeField]
-    private float ReloadTimeUpgrade = -0.2f;
-    [SerializeField]
-    [Range(0.1f, 10f)]
-    private float DefaultReloadTime = 2.5f;
-
     void Awake()
     {
         if (Instance != null)
@@ -52,6 +33,7 @@ public class GameUpgrades : MonoBehaviour
     /// </summary>
     private void ResetUpgrades()
     {
-        ReloadTime = DefaultReloadTime;
+        //ReloadTime = DefaultReloadTime;
+        //AmmoCapacity = DefaultAmmoCapacity;
     }
 }
