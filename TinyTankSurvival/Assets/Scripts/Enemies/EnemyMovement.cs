@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
-        PlayerControllerOLD.OnPlayerSpawned += UpdatePlayerTank;
+        GameHandler.OnPlayerSpawned += UpdatePlayerTank;
     }
 
     // Update is called once per frame

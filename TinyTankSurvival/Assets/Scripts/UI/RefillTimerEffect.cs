@@ -58,7 +58,7 @@ public class RefillTimerEffect : MonoBehaviour
             }
         }
         
-        textField.text = string.Format("{0:0.00}", Mathf.Lerp(gameUpgrades.ReloadTime, 0, progress) );
+        //textField.text = string.Format("{0:0.00}", Mathf.Lerp(gameUpgrades.ReloadTime, 0, progress) );
         textField.color = Color.HSVToRGB(progress * 120/360, 1, 1);
         textField.alpha = 1;
     }

@@ -57,12 +57,6 @@ public class AmmoManager : MonoBehaviour
         Ammo = AmmoCapacity;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Spend X amount of ammo. On success automatically refills ammo 1 by 1 after reload time
     /// </summary>

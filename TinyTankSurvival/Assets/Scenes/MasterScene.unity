@@ -237,7 +237,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988929787}
-  - component: {fileID: 1988929788}
   - component: {fileID: 1988929789}
   - component: {fileID: 1988929790}
   m_Layer: 0
@@ -262,22 +261,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1988929788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988929786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f1ca1aee6f6147459814b80ef0e879f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tankPrefabs:
-  - {fileID: 8923247548632480749, guid: d72a03cb2de38184c8db9acb941ebb45, type: 3}
-  playerCharacterPrefab: {fileID: 6055971365535563498, guid: 5a9aeccdf6bece74c909691f060d5980,
-    type: 3}
 --- !u!114 &1988929789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +273,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5572b05edb4c7f4e8c3730678e71758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tankPrefabs:
+  - {fileID: 8923247548632480749, guid: d72a03cb2de38184c8db9acb941ebb45, type: 3}
+  playerCharacterPrefab: {fileID: 6055971365535563498, guid: 5a9aeccdf6bece74c909691f060d5980,
+    type: 3}
+  gameHUDPrefab: {fileID: 1942159111266349330, guid: 2f92855ce719af3439127eb4ea4ab04d,
+    type: 3}
 --- !u!114 &1988929790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,8 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameHandler: {fileID: 1988929789}
-  MinReloadTime: 0.1
-  ReloadTimeUpgrade: -0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

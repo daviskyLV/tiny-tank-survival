@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c461d9ba7fb4524489dc2885ce0864f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoManager: {fileID: 9180229974116132500}
 --- !u!114 &6404510813200768604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,3 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f45c82494a9dda40a11d1ec18f6720a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinReloadTime: 0.1
+  ReloadTimeUpgrade: -0.2
+  DefaultReloadTime: 2.5
+  MaxAmmoCapacity: 10
+  AmmoCapacityUpgrade: 1
+  DefaultAmmoCapacity: 3
