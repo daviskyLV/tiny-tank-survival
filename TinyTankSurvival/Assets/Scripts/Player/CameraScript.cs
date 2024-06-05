@@ -8,7 +8,7 @@ public class CameraScript : MonoBehaviour
 
     private void Start()
     {
-        PlayerController.OnPlayerSpawned += UpdatePlayerTank;
+        PlayerControllerOLD.OnPlayerSpawned += UpdatePlayerTank;
     }
 
     // Update is called once per frame
