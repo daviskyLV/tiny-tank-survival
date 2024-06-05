@@ -25,6 +25,9 @@ public class StandardProjectile : Projectile
     /// </summary>
     private Quaternion? overridenMovementRotation = null;
 
+    // Last recorded position, hack to fix teleporting
+    private Vector3 lastPosition = Vector3.zero;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -44,6 +47,7 @@ public class StandardProjectile : Projectile
         if (setup)
             return;
 
+        lastPosition = transform.position;
         this.shooter = shooter;
         this.projectileSpeed = speed;
         this.bouncesLeft = maxBounces;
@@ -66,6 +70,10 @@ public class StandardProjectile : Projectile
     // Calculating and moving the projectile using a rigidbody
     private void MoveProjectile()
     {
+        var tPos = lastPosition;
+        if (transform.position.y > 0)
+            tPos = transform.position;
+
         // Handling initial rotation, in case it was overridden somewhere else
         Quaternion initialRotation = transform.rotation;
         if (overridenMovementRotation != null)
@@ -75,7 +83,7 @@ public class StandardProjectile : Projectile
         }
 
         // Calculating the target position (default 3 units forward)
-        var aimTowards = transform.position + (initialRotation * Vector3.forward);
+        var aimTowards = tPos + (initialRotation * Vector3.forward);
         if (targetTank != null)
         {
             aimTowards = targetTank.transform.position;
@@ -83,7 +91,7 @@ public class StandardProjectile : Projectile
 
         // Heat seeking based off of
         // https://github.com/Matthew-J-Spencer/Homing-Missile/blob/main/Missile.cs
-        var heading = aimTowards - transform.position;
+        var heading = aimTowards - tPos;
         var heatRotation = Quaternion.LookRotation(heading, transform.up);
         // lerping heat rotation
         heatRotation = Quaternion.RotateTowards(initialRotation, heatRotation, heatSeekingRotation * Time.deltaTime);
@@ -97,9 +105,10 @@ public class StandardProjectile : Projectile
 
         // Applying movement & rotation
         rb.Move(
-            transform.position + fwVec,
+            tPos + fwVec,
             finalRotation
         );
+        lastPosition = tPos + fwVec;
     }
 
     private void OnTriggerEnter(Collider other)

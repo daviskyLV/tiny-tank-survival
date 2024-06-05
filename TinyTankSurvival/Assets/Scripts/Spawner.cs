@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameHandler.OnPlayerSpawned += UpdatePlayerCharacter;
+        StartCoroutine(WaitForPlayerCharacter());
         // Getting all the enemy spawnpoints
         foreach (Transform t in enemySpawnpointParent.transform)
         {
@@ -43,8 +43,13 @@ public class Spawner : MonoBehaviour
         SpawnEnemy();
     }
 
-    private void UpdatePlayerCharacter(GameObject character)
-    {
+    private IEnumerator WaitForPlayerCharacter() {
+        var character = GameObject.Find(Constants.PlayerCharacterName);
+        if (character == null)
+        {
+            yield return null;
+        }
+
         playerCharacter = character;
     }
 
