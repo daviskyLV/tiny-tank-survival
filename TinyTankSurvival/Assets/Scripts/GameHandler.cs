@@ -36,7 +36,7 @@ public class GameHandler : MonoBehaviour
     /// </summary>
     public static event Action OnGameStarted;
 
-    private GameObject playerCharacter;
+    public GameObject PlayerCharacter { get; private set; }
     private AsyncOperation loadingMap;
     private GameObject gameHUD;
     private Scene mapPlayed;
@@ -88,21 +88,21 @@ public class GameHandler : MonoBehaviour
     private void SpawnPlayer()
     {
         // Instantiating the new player character
-        playerCharacter = Instantiate(playerCharacterPrefab);
-        playerCharacter.name = Constants.PlayerCharacterName;
-        var playerTank = Instantiate(tankPrefabs[0], playerCharacter.transform);
+        PlayerCharacter = Instantiate(playerCharacterPrefab);
+        PlayerCharacter.name = Constants.PlayerCharacterName;
+        var playerTank = Instantiate(tankPrefabs[0], PlayerCharacter.transform);
         playerTank.name = Constants.TankName;
 
         // Moving the player character to level scene and setting it up
-        SceneManager.MoveGameObjectToScene(playerCharacter, mapPlayed);
-        playerCharacter.transform.position = GameObject.Find(Constants.PlayerSpawnName).transform.position;
+        SceneManager.MoveGameObjectToScene(PlayerCharacter, mapPlayed);
+        PlayerCharacter.transform.position = GameObject.Find(Constants.PlayerSpawnName).transform.position;
 
         // Enabling necessary components
-        playerCharacter.GetComponent<PlayerMovement>().enabled = true;
-        playerCharacter.GetComponent<PlayerShooting>().enabled = true;
-        playerCharacter.GetComponent<PlayerAiming>().enabled = true;
+        PlayerCharacter.GetComponent<PlayerMovement>().enabled = true;
+        PlayerCharacter.GetComponent<PlayerShooting>().enabled = true;
+        PlayerCharacter.GetComponent<PlayerAiming>().enabled = true;
 
         // Letting others know that we just spawned the player
-        OnPlayerSpawned?.Invoke(playerCharacter);
+        OnPlayerSpawned?.Invoke(PlayerCharacter);
     }
 }

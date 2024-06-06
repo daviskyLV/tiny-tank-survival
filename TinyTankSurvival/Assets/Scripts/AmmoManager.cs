@@ -45,9 +45,16 @@ public class AmmoManager : MonoBehaviour
 
     public int Ammo {  get; private set; }
     /// <summary>
-    /// Invoked whenever 1 ammo has been reloaded
+    /// Invoked whenever 1 ammo has been reloaded. Value is how much ammo there currently is
     /// </summary>
-    public event Action OnAmmoReloaded;
+    public event Action<int> OnAmmoReloaded;
+    /// <summary>
+    /// Invoked to indicated that ammo reload progress has updated. Progress is 0-1
+    /// </summary>
+    public event Action<double> OnAmmoReloadProgress;
+
+    private double timeSinceReload = 0;
+    private bool reloading = false;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +62,39 @@ public class AmmoManager : MonoBehaviour
         ReloadTime = DefaultReloadTime;
         AmmoCapacity = DefaultAmmoCapacity;
         Ammo = AmmoCapacity;
+    }
+
+    void Update()
+    {
+        Reloading();
+    }
+
+    private void Reloading()
+    {
+        if (Ammo >= AmmoCapacity)
+            return;
+
+        if (reloading == false)
+        {
+            // Starting reload
+            timeSinceReload = Time.timeAsDouble;
+            reloading = true;
+            OnAmmoReloadProgress?.Invoke(0);
+            return;
+        }
+
+        if (timeSinceReload + ReloadTime > Time.timeAsDouble)
+        {
+            // Reload in progress
+            OnAmmoReloadProgress?.Invoke((Time.timeAsDouble - timeSinceReload) / ReloadTime);
+            return;
+        }
+
+        // Ammo reloaded
+        Ammo++;
+        OnAmmoReloaded?.Invoke(Ammo);
+        OnAmmoReloadProgress?.Invoke(1);
+        reloading = false;
     }
 
     /// <summary>
@@ -67,8 +107,6 @@ public class AmmoManager : MonoBehaviour
             return false;
 
         Ammo -= amount;
-        StartCoroutine(ReloadCoroutine(amount));
-
         return true;
     }
 
@@ -78,24 +116,5 @@ public class AmmoManager : MonoBehaviour
     /// <returns>True if successful, false if failed</returns>
     public bool SpendAmmo() {
         return SpendAmmo(1);
-    }
-
-    /// <summary>
-    /// Reloads X amount of ammo, one by one
-    /// </summary>
-    /// <param name="amount">How much ammo to reload</param>
-    private IEnumerator ReloadCoroutine(int amount)
-    {
-        var reloaded = 0;
-        var lastReload = Time.timeAsDouble;
-        while (reloaded < amount && Ammo < AmmoCapacity) {
-            if (lastReload + ReloadTime <= Time.timeAsDouble) {
-                reloaded++;
-                OnAmmoReloaded?.Invoke();
-            } else
-            {
-                yield return null;
-            }
-        }
     }
 }
