@@ -27,6 +27,8 @@ public class StandardProjectile : Projectile
 
     // Last recorded position, hack to fix teleporting
     private Vector3 lastPosition = Vector3.zero;
+    // Last recorded rotation, hack to fix direction
+    private Quaternion lastRotation = Quaternion.Euler(0,0,0);
 
     // Start is called before the first frame update
     private void Start()
@@ -48,6 +50,7 @@ public class StandardProjectile : Projectile
             return;
 
         lastPosition = transform.position;
+        lastRotation = transform.rotation;
         this.shooter = shooter;
         this.projectileSpeed = speed;
         this.bouncesLeft = maxBounces;
@@ -74,8 +77,12 @@ public class StandardProjectile : Projectile
         if (transform.position.y > 0)
             tPos = transform.position;
 
+        var tRot = lastRotation;
+        if (transform.rotation.eulerAngles.y != 0)
+            tRot = transform.rotation;
+
         // Handling initial rotation, in case it was overridden somewhere else
-        Quaternion initialRotation = transform.rotation;
+        Quaternion initialRotation = tRot;
         if (overridenMovementRotation != null)
         {
             initialRotation = (Quaternion)overridenMovementRotation;
