@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 5683775379485002903}
   - component: {fileID: 3553147541480841770}
   - component: {fileID: 6643010964423552099}
-  - component: {fileID: 2536977162428043337}
   m_Layer: 5
   m_Name: RefillTimer
   m_TagString: Untagged
@@ -153,8 +152,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 255
-  m_fontColor: {r: 1, g: 0, b: 0, a: 0}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -227,21 +226,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 1
---- !u!114 &2536977162428043337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5163869431246032153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3b31d1a2d28c14ab53b7618cf9893d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textField: {fileID: 3553147541480841770}
-  fillIcon: {fileID: 1580579560372679078}
-  textFadeOutTime: 0.4
 --- !u!1 &7072208828266480941
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +238,7 @@ GameObject:
   - component: {fileID: 3789629211847987682}
   - component: {fileID: 2252194764315721808}
   - component: {fileID: 1381847067591767696}
+  - component: {fileID: 5006534947480701145}
   m_Layer: 5
   m_Name: Missile
   m_TagString: Untagged
@@ -334,3 +319,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1
+--- !u!114 &5006534947480701145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072208828266480941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4e4103139428145993a640f0451e39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 3553147541480841770}
+  fillIcon: {fileID: 1580579560372679078}
+  textFadeOutTime: 0.4

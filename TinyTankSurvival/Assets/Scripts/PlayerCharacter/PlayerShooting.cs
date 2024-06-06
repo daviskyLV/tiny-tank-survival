@@ -16,7 +16,7 @@ public class PlayerShooting : MonoBehaviour
     /// <summary>
     /// Invoked whenever the player shoots
     /// </summary>
-    public static event Action OnPlayerShooting;
+    public event Action OnPlayerShooting;
 
     private void Awake()
     {

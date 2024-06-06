@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class RefillTimerEffect : MonoBehaviour
+public class MissileIconController : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI textField;
@@ -16,19 +14,30 @@ public class RefillTimerEffect : MonoBehaviour
     [Range(0f, 2.5f)]
     private float textFadeOutTime = 0.4f;
 
-    private GameUpgrades gameUpgrades;
+    private AmmoManager ammoManager;
     private Coroutine textFadeAnimation;
 
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Setup the 
+    /// </summary>
+    /// <param name="ammoManager"></param>
+    public void Setup(AmmoManager ammoManager)
     {
-        gameUpgrades = GameUpgrades.Instance;
+        this.ammoManager = ammoManager;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Update progress towards reloading
+    /// </summary>
+    /// <param name="progress">Progress 0-1</param>
+    public void UpdateProgress(float progress)
     {
-        // No event available? :(
+        if (ammoManager == null)
+        {
+            Debug.LogError("Missile Icon Controller has no Ammo manager assigned, ignoring progress update!");
+            return;
+        }
+        fillIcon.fillAmount = progress;
         UpdateText(fillIcon.fillAmount);
     }
 
@@ -46,7 +55,8 @@ public class RefillTimerEffect : MonoBehaviour
             {
                 textFadeAnimation = StartCoroutine(FadeOutText());
             }
-        } else if (progress <= 0)
+        }
+        else if (progress <= 0)
         {
             if (textFadeAnimation == null)
                 return;
@@ -57,9 +67,9 @@ public class RefillTimerEffect : MonoBehaviour
                 textField.alpha = 1;
             }
         }
-        
-        //textField.text = string.Format("{0:0.00}", Mathf.Lerp(gameUpgrades.ReloadTime, 0, progress) );
-        textField.color = Color.HSVToRGB(progress * 120/360, 1, 1);
+
+        textField.text = string.Format("{0:0.00}", Mathf.Lerp(ammoManager.ReloadTime, 0, progress));
+        textField.color = Color.HSVToRGB(progress * 120 / 360, 1, 1);
         textField.alpha = 1;
     }
 
@@ -68,9 +78,11 @@ public class RefillTimerEffect : MonoBehaviour
     /// <summary>
     /// Fades out text
     /// </summary>
-    private IEnumerator FadeOutText() {
+    private IEnumerator FadeOutText()
+    {
         float elapsedTime = 0.0f;
-        while (elapsedTime < textFadeOutTime) {
+        while (elapsedTime < textFadeOutTime)
+        {
             elapsedTime += Time.deltaTime;
             textField.alpha = Mathf.Lerp(1, 0, elapsedTime / textFadeOutTime);
             yield return null;

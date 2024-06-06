@@ -51,9 +51,9 @@ public class AmmoManager : MonoBehaviour
     /// <summary>
     /// Invoked to indicated that ammo reload progress has updated. Progress is 0-1
     /// </summary>
-    public event Action<double> OnAmmoReloadProgress;
+    public event Action<float> OnAmmoReloadProgress;
 
-    private double timeSinceReload = 0;
+    private float timeSinceReload = 0;
     private bool reloading = false;
 
     // Start is called before the first frame update
@@ -61,7 +61,7 @@ public class AmmoManager : MonoBehaviour
     {
         ReloadTime = DefaultReloadTime;
         AmmoCapacity = DefaultAmmoCapacity;
-        Ammo = AmmoCapacity;
+        //Ammo = AmmoCapacity;
     }
 
     void Update()
@@ -77,16 +77,16 @@ public class AmmoManager : MonoBehaviour
         if (reloading == false)
         {
             // Starting reload
-            timeSinceReload = Time.timeAsDouble;
+            timeSinceReload = Time.time;
             reloading = true;
             OnAmmoReloadProgress?.Invoke(0);
             return;
         }
 
-        if (timeSinceReload + ReloadTime > Time.timeAsDouble)
+        if (timeSinceReload + ReloadTime > Time.time)
         {
             // Reload in progress
-            OnAmmoReloadProgress?.Invoke((Time.timeAsDouble - timeSinceReload) / ReloadTime);
+            OnAmmoReloadProgress?.Invoke((Time.time - timeSinceReload) / ReloadTime);
             return;
         }
 
