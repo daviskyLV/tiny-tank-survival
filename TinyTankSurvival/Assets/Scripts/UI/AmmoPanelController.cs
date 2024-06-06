@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AmmoPanelController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class AmmoPanelController : MonoBehaviour
     private List<MissileIconController> ammoIconScripts;
     private AmmoManager ammoManager;
     private PlayerShooting playerShooting;
+
+    private float startTime;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +65,24 @@ public class AmmoPanelController : MonoBehaviour
         playerShooting.OnPlayerShooting += PlayerShooting;
         ammoManager.OnAmmoReloadProgress += AmmoReloading;
         ammoManager.OnAmmoReloaded += AmmoReloaded;
+
+        // Dumb unity bug work around
+        GetComponent<HorizontalLayoutGroup>().enabled = false;
+        startTime = Time.time;
+        StartCoroutine(RefreshHorLayout());
+    }
+
+    /// <summary>
+    /// Unity bug? The missile icons arent spaced out as they should :/ Waits for 1 second 
+    /// </summary>
+    private IEnumerator RefreshHorLayout()
+    {
+        while (Time.time < startTime + 1.0f)
+        {
+            yield return null;
+        }
+
+        GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 
     private void PlayerShooting()

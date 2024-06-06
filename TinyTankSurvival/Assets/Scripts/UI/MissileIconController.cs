@@ -47,7 +47,7 @@ public class MissileIconController : MonoBehaviour
     /// <param name="progress">Progress towards completion 0-1</param>
     private void UpdateText(float progress)
     {
-        if (progress >= 1)
+        if (progress >= 1.0f)
         {
             if (textFadeAnimation != null)
                 return;
@@ -56,16 +56,14 @@ public class MissileIconController : MonoBehaviour
                 textFadeAnimation = StartCoroutine(FadeOutText());
             }
         }
-        else if (progress <= 0)
+        else if (progress <= 0.0f)
         {
-            if (textFadeAnimation == null)
-                return;
-            else
-            {
+            if (textFadeAnimation != null) {
                 StopCoroutine(textFadeAnimation);
                 textFadeAnimation = null;
-                textField.alpha = 1;
             }
+            textField.alpha = 0;
+            return;
         }
 
         textField.text = string.Format("{0:0.00}", Mathf.Lerp(ammoManager.ReloadTime, 0, progress));

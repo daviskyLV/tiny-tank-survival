@@ -436,7 +436,7 @@ MonoBehaviour:
   maxEnemiesPerSpawn: 1
   enemySpawnpointParent: {fileID: 2015920931811735765}
   enemyHolder: {fileID: 904633628}
-  spawningInterval: 3.5
+  spawningInterval: 7.27
   enemyPrefab: {fileID: 8242964122432306108, guid: 5cdfc46fc4dfce842a6d1080d0617c56,
     type: 3}
 --- !u!4 &233396718
