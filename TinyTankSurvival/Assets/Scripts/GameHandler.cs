@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 // Singleton to handle some game related stuff
@@ -47,36 +48,53 @@ public class GameHandler : MonoBehaviour
     private GameObject gameHUD;
     private Scene mapPlayed;
 
+    private PlayerInputActions playerControls;
+    private InputAction fireAction;
+
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            playerControls = new PlayerInputActions();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Space) &&
-            (loadingMap == null || loadingMap.isDone))
+        fireAction = playerControls.Player.Fire;
+        fireAction.Enable();
+        fireAction.performed += InitiateGameStart;
+    }
+
+    private void OnDisable()
+    {
+        fireAction.Disable();
+        fireAction.performed -= InitiateGameStart;
+    }
+
+    private void InitiateGameStart(InputAction.CallbackContext context)
+    {
+        if (!(loadingMap == null || loadingMap.isDone))
+            return;
+
+        if (mapPlayed == null || !mapPlayed.IsValid())
         {
-            if (mapPlayed == null || !mapPlayed.IsValid())
-            {
-                StartNewGame();
-                return;
-            }
-
-            // Unloading currently played game
-            if (gameHUD != null)
-                Destroy(gameHUD);
-
-            loadingMap = SceneManager.UnloadSceneAsync(mapPlayed);
-            // How to use AsyncOperation.completed
-            // https://discussions.unity.com/t/how-to-use-asyncoperation-completed/226417
-            loadingMap.completed += (asyncOperation) =>
-            {
-                StartNewGame();
-            };
+            StartNewGame();
+            return;
         }
+
+        // Unloading currently played game
+        if (gameHUD != null)
+            Destroy(gameHUD);
+
+        loadingMap = SceneManager.UnloadSceneAsync(mapPlayed);
+        // How to use AsyncOperation.completed
+        // https://discussions.unity.com/t/how-to-use-asyncoperation-completed/226417
+        loadingMap.completed += (asyncOperation) =>
+        {
+            StartNewGame();
+        };
     }
 
     private void StartNewGame()
