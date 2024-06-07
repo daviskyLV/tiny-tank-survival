@@ -13,6 +13,12 @@ public class GameHandler : MonoBehaviour
     private GameObject playerCharacterPrefab;
     [SerializeField]
     private GameObject gameHUDPrefab;
+    [SerializeField]
+    private GameObject menuTutorialPrefab;
+    [SerializeField]
+    private GameObject menuTutorial;
+    [SerializeField]
+    private string mapSceneName = "SandyPingPong";
 
     /// <summary>
     /// The GameHandler's Singleton instance
@@ -76,12 +82,14 @@ public class GameHandler : MonoBehaviour
     private void StartNewGame()
     {
         OnGameStarted?.Invoke();
-        loadingMap = SceneManager.LoadSceneAsync("SandyPingPong", LoadSceneMode.Additive);
+        loadingMap = SceneManager.LoadSceneAsync(mapSceneName, LoadSceneMode.Additive);
         gameHUD = Instantiate(gameHUDPrefab);
         loadingMap.completed += (asyncOperation) =>
         {
-            mapPlayed = SceneManager.GetSceneByName("SandyPingPong");
+            mapPlayed = SceneManager.GetSceneByName(mapSceneName);
             SpawnPlayer();
+            if (menuTutorial != null)
+                Destroy(menuTutorial);
         };
     }
 

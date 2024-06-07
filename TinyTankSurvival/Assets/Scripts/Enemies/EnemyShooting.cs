@@ -72,7 +72,7 @@ public class EnemyShooting : MonoBehaviour
             // Something is blocking the view
             return;
         }
-
+        
         // Can see player, time to shoot
         if (!ammoManager.SpendAmmo())
             return;
