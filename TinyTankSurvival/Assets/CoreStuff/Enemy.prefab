@@ -70,6 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453bbfed6ae7cfa4ab41119a6f6634dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 2310652345865931189}
+  tank: {fileID: 685059940368518185}
+  pathTimeUpdate: 0.4
 --- !u!114 &3682112182199361671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,10 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinReloadTime: 0.1
   ReloadTimeUpgrade: -0.2
-  DefaultReloadTime: 2.5
-  MaxAmmoCapacity: 9
+  DefaultReloadTime: 3
+  MaxAmmoCapacity: 10
   AmmoCapacityUpgrade: 1
-  DefaultAmmoCapacity: 3
+  DefaultAmmoCapacity: 1
 --- !u!1001 &325699228523653436
 PrefabInstance:
   m_ObjectHideFlags: 0

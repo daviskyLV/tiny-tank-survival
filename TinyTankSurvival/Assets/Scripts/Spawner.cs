@@ -16,9 +16,13 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
 
+    private GameHandler gHandler;
+
     private List<GameObject> enemySpawnpoints = new();
     private double lastSpawntime = 0;
+
     private GameObject playerCharacter;
+    private Transform playerTank;
 
     // Events
     /// <summary>
@@ -29,6 +33,7 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gHandler = GameHandler.Instance;
         StartCoroutine(WaitForPlayerCharacter());
         // Getting all the enemy spawnpoints
         foreach (Transform t in enemySpawnpointParent.transform)
@@ -40,43 +45,44 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerCharacter == null)
+            return;
+
         SpawnEnemy();
     }
 
     private IEnumerator WaitForPlayerCharacter() {
-        var character = GameObject.Find(Constants.PlayerCharacterName);
-        if (character == null)
+        while (gHandler.PlayerCharacter == null)
         {
             yield return null;
         }
+        var character = gHandler.PlayerCharacter;
 
         playerCharacter = character;
+        playerTank = playerCharacter.transform.Find(Constants.TankName);
     }
 
     private void SpawnEnemy()
     {
         if (
             enemyHolder.transform.childCount >= maxEnemiesPerSpawn * enemySpawnpoints.Count ||
-            Time.realtimeSinceStartupAsDouble - lastSpawntime < spawningInterval
+            Time.timeAsDouble - lastSpawntime < spawningInterval
             ) {
             return;
         }
 
         // Getting player character
-        if (playerCharacter == null)
-            return;
-        var playerTank = playerCharacter.transform.Find(Constants.TankName);
         if (playerTank == null)
             return;
 
         var enemy = Instantiate(enemyPrefab, enemyHolder.transform);
         var chosenSpawn = enemySpawnpoints[UnityEngine.Random.Range(0, enemySpawnpoints.Count)];
         enemy.transform.position = chosenSpawn.transform.position;
-        enemy.GetComponent<EnemyMovement>().PlayerTank = playerTank;
+        enemy.GetComponent<EnemyMovement>().Setup(playerTank);
 
         // Invoking events
         OnEnemySpawned?.Invoke(enemy);
 
-        lastSpawntime = Time.realtimeSinceStartupAsDouble;
+        lastSpawntime = Time.timeAsDouble;
     }
 }
