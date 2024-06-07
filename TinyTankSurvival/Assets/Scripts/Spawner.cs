@@ -79,6 +79,7 @@ public class Spawner : MonoBehaviour
         var chosenSpawn = enemySpawnpoints[UnityEngine.Random.Range(0, enemySpawnpoints.Count)];
         enemy.transform.position = chosenSpawn.transform.position;
         enemy.GetComponent<EnemyMovement>().Setup(playerTank);
+        enemy.GetComponent<EnemyShooting>().Setup(playerTank);
 
         // Invoking events
         OnEnemySpawned?.Invoke(enemy);

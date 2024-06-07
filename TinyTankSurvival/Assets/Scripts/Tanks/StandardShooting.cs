@@ -42,6 +42,6 @@ public class StandardShooting : TankShooting
     public override void Shoot()
     {
 
-        CreateProjectile(5.0f, 3000, 0.0f, null);
+        CreateProjectile(5.0f, 2, 0.0f, null);
     }
 }
