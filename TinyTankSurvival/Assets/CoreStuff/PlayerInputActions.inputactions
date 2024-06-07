@@ -47,8 +47,8 @@
                 },
                 {
                     "name": "",
-                    "id": "dca7ed2b-f128-4941-a6e4-528216ab9180",
-                    "path": "<Keyboard>/f",
+                    "id": "17a2abc6-2b99-4466-bd28-2696437f747a",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -112,6 +112,61 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Arcade",
+                    "id": "c390c312-c4cf-4afc-9375-2ddd1b2abb65",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ddab2f2d-3ca3-4606-855f-2fd730edb8fd",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "ce7cde8b-f132-42b6-a3ab-16455bbcd7d8",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "35ae6edb-3634-4627-9cc4-ef9c498f0ae3",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "211e1113-1b1a-461f-83a6-6e4b33ddcac6",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "ArrowKeys",
                     "id": "3236e114-78dd-40a5-ba4b-ca4d5119420a",
                     "path": "2DVector",
@@ -165,6 +220,17 @@
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8860af77-563a-4027-8649-91ba21a5f20e",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
